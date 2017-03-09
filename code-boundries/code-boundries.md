@@ -117,4 +117,36 @@ export default const myReducer = (state = initialState, action) => {
 
 ### Passing Props
 
+- There are multiple ways to pass data to a component through props. Some work better than others, but none are a catch all solution. Best to evaluate each component carefully and chose the best method for your particular circumstance.
+
+#### Component to Component
+
+- The simplest and most easy to grok method of passing data to a component through props is Component to Component.
+
+```
+// Home.jsx
+
+class Home extends React.Component {
+    render() {
+        return (
+            <div>
+                <MyComponent
+                    prop1={this.state.thing1}
+                    prop2={this.props.thing2}
+                    prop3={this.props.thing3}
+                    ....
+                />
+            </div>
+        )
+    }
+}
+```
+
+- In this example, Home is getting props from somewhere and passing them straight through to MyComponent.
+    + This form of passing data keeps these two components tightly coupled.
+    + This makes your code harder to maintain, especially as your app grows and evolves. Simple data changes might force you to refactor at least 2, possibly more, components.
+
+#### Connected Component
+
+
 

@@ -64,7 +64,7 @@ const ADD_TODO = '@todoModule/ADD_TODO';
 
 const initalState = []
 
-const myReducer = (state = initialState, action) => {
+export default const myReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TODO:
             return [
@@ -89,13 +89,32 @@ const myReducer = (state = initialState, action) => {
 
 const RESET_EXPENSE_STATE = '@expenseHome/RESET_EXPENSE_STATE';
 
+// expenseItemizationModule.js
+import {RESET_EXPENSE_STATE} from '../expenseHomeModule';
+
+export default const myReducer = (state = initialState, action) => {
+    switch (action.type) {
+        ....
+        case RESET_EXPENSE_STATE:
+            return {
+                ...initialState
+            }
+        ....
+    }
+}
 
 ```
 
 
+#### API Util
+
+- A simple utility where API calls live
+- Abstaracts API calls from Actions, leaving cleaner, easier to test actions.
+- Handle any data manipulation for the sake of API calls here rather than in the action.
+- This util is especially nice for complex api calls, as it removes the mental payload of parsing `Promise` chains.
 
 ## Components
 
-
+### Passing Props
 
 

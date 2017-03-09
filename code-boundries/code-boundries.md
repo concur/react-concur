@@ -47,14 +47,53 @@ const addToDo = (toDo) => ({
 
 - A complex action can take advantage of the `thunk` and `promise` middlewhere, and can easily get out of hand.
 - A few pointers to keep these actions reasonable:
-    + Try to keep complexity out of your Actions when you can. Data manipulation can be done in the reducer.
+    + Try to keep complexity out of your Actions when you can. Pure actions (w/o side effects) are best actions.
+    + Data manipulation can be done in the reducer.
     + Keep API calls in their own util. This can keep your actions cleaner, and simpler to unit test.
-    + Call getState only once near the top of your function.
-    + Don't call getState unecessarily to get data that's handled by the local reducer. Insead, dispatch an action and get that data from the reducer itself.     
+    + Call `getState` only once near the top of your function.
+    + Don't call getState unecessarily to get data that's handled by the local reducer. Insead, dispatch an action and get that data from the reducer itself.
+    + Always treat data from the store as though it were immutable.    
 
 #### Reducer
 
-- Actions describe the fact that something happened, but don't specify how the application's state changes in response. This is the job of reducers.
+- The Reducer specifies how the applications state changes in response to an action.
+- A simple reducer looks like this:
+
+```
+const ADD_TODO = '@todoModule/ADD_TODO';
+
+const initalState = []
+
+const myReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case ADD_TODO:
+            return [
+                ...state.slice(0, action.index),
+                action.payload,
+                ...state.slice(action.index, state.length + 1)
+            ]
+        defualt:
+            return [
+                ...state
+            ];
+    }
+}
+```
+
+- Tips for clean, efficiant reducers:
+    - The best reducers specialize in a single concern.
+    - Reducers can listen for actions from another module if needed.
+
+```
+// expenseHomeModule.js
+
+const RESET_EXPENSE_STATE = '@expenseHome/RESET_EXPENSE_STATE';
+
+
+```
+
+
+
 ## Components
 
 

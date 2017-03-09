@@ -148,5 +148,47 @@ class Home extends React.Component {
 
 #### Connected Component
 
+- A connected component is one that uses the `react-redux` connect function to pass props directly from state. It looks a little more complexs, but in practice it will greately reduce the complexity and remove the tight coupling of components from your app.
+
+```
+// MyComponent.jsx
+import {connect} from 'react-redux';
+
+const MyComponent = ({ prop1, prop2, prop3 }) => {
+    return (
+        <div>
+            {`I am a ${prop1} that ${prop2} when ${prop3}`}
+            ....
+        </div>
+    )
+}
+
+const mapStateToProps = state => ({
+    prop1: state.expense.prop1,
+    prop2: state.itemization.prop2,
+    prop3: state.user.prop3    
+});
+
+export defualt connect(mapStateToProps)(MyComponent);
+
+
+// Home.jsx
+
+class Home extends React.Component {
+    render() {
+        return (
+            <div>
+                <MyComponent />
+            </div>
+        )
+    }
+}
+```
+
+- Using this pattern, both components are independant of one another. In other words, you could simply cut MyComponent and past it into another component, and it will work as intended.
+- Keeps data flow through your app direct and simple
+- Notice that we're not creating an external container file, importing MyComponent, and passing props to it, then exporting the container. This isn't necessary. Instead just use the `connect` function in the same file as your component, effectively making it it's own container.
+
+#### More on connect
 
 

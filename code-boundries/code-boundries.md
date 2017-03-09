@@ -18,8 +18,42 @@ How to seperate your concerns.
 ## Modules
 ### The data layer
 
+- Our modules consist of
+    + Constants
+    + Actions
+    + Reducer
 
+#### Actions
 
+- Actions are payloads of information that send data from your application to your store. They are the only source of information for the store. You send them to the store using `store.dispatch()`
+
+```
+const ADD_TODO = 'ADD_TODO'
+
+{
+  type: ADD_TODO,
+  text: 'Build my first Redux app'
+}
+```
+
+- A simple action just passes data and a type to the reducer
+
+```
+const addToDo = (toDo) => ({
+    type: ADD_TODO,
+    toDo    
+});
+```
+
+- A complex action can take advantage of the `thunk` and `promise` middlewhere, and can easily get out of hand:
+
+```
+
+```
+
+#### Reducer
+
+- Actions describe the fact that something happened, but don't specify how the application's state changes in response. This is the job of reducers.
 ## Components
 
 

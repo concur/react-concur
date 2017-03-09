@@ -45,11 +45,12 @@ const addToDo = (toDo) => ({
 });
 ```
 
-- A complex action can take advantage of the `thunk` and `promise` middlewhere, and can easily get out of hand:
-
-```
-
-```
+- A complex action can take advantage of the `thunk` and `promise` middlewhere, and can easily get out of hand.
+- A few pointers to keep these actions reasonable:
+    + Try to keep complexity out of your Actions when you can. Data manipulation can be done in the reducer.
+    + Keep API calls in their own util. This can keep your actions cleaner, and simpler to unit test.
+    + Call getState only once near the top of your function.
+    + Don't call getState unecessarily to get data that's handled by the local reducer. Insead, dispatch an action and get that data from the reducer itself.     
 
 #### Reducer
 

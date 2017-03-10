@@ -321,3 +321,87 @@ const MyComponent = (props) => {
 
 - Favor event handlers over `ref`s. Avoid `ref`s when possible.
 
+### State
+
+- There are several ways to handle the state of a particular component. Let's look at some of the methods and compair.
+- `class` components have access to `this.state` whereas SFCs do not.
+- Accessing and updating a components state is relatively painless.
+
+```
+class MyComponent extende React.Component {
+    ....
+
+    handleChange(value) {
+        this.setState({
+            foo: value   
+        });
+    }
+    ....
+
+    render (
+        ...
+        <span>{state.value}</span>
+        ...
+    )
+}
+
+``` 
+```
+- Pros of internal state:
+    + Easy
+    + Great for managing things that aren't related to data in the store. For example, active states, is modal open, etc.
+- Cons of internal state:
+    + In some cases, relying on component state too much can make components difficult to reuse and maintain. 
+    + As the code base grows, too much state manipulation can greately affect your technical debt.
+    + Storing data in state leads to components being difficult for developers to adapt to different circumstances.
+- If you need to use 'componentWillRecieveProps' to fit some data change into the component, consider refactoring it to instead just read data from the store.
+- Instead of storing data in component state, opt for making the component a connected component, and store data in the store.
+
+```
+// Dont do this
+
+class MyComponent extende React.Component {
+    ....
+
+    handleChange(value) {
+        this.setState({
+            foo: value   
+        });
+    }
+
+    handleBlur(){
+        this.props.onBlur(this.state.foo) // used to update the store
+    }
+    ....
+
+    render (
+        ...
+        <span>{state.value}</span>
+        ...
+    )
+}
+
+// instead, favor this
+import {updateValue} from 'myModule';
+
+const MyComponent = (props) => {
+    const handleChange = (value) => {
+        this.props.onChange(value)
+    }
+
+    return (
+        ...
+        <span>{props.value}</span>
+        ...
+    )
+}
+
+export defautl connect(state => ({
+    ...
+}), {
+   onChange: updateValue 
+})(MyComponent)
+```
+
+- In the example above we refactored our class component into a SFC, we stopped saving data to state and instad read data from props and pass actions through props to update data in the store.
+- This method takes a little more boilerplate work, but is vastly more maintainable in the long run.

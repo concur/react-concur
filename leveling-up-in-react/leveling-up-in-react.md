@@ -344,9 +344,8 @@ class MyComponent extende React.Component {
         ...
     )
 }
-
-``` 
 ```
+
 - Pros of internal state:
     + Easy
     + Great for managing things that aren't related to data in the store. For example, active states, is modal open, etc.

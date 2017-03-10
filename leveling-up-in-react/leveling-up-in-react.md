@@ -1,6 +1,5 @@
 # Leveling Up In React (working title)
 ## General tips and best practices when working in a React/Redux ecosystem
-How to seperate your concerns.
 
 ## React/Redux Data Flow 30 Second Review
 
@@ -48,10 +47,10 @@ const addToDo = (toDo) => ({
 - A complex action can take advantage of the `thunk` and `promise` middlewhere, and can easily get out of hand.
 - A few pointers to keep these actions reasonable:
     + Try to keep complexity out of your Actions when you can. Pure actions (w/o side effects) are best actions.
-    + Data manipulation can be done in the reducer.
+    + Prefer data manipulation in the reducer when possible.
     + Keep API calls in their own util. This can keep your actions cleaner, and simpler to unit test.
     + Call `getState` only once near the top of your function.
-    + Don't call getState unecessarily to get data that's handled by the local reducer. Insead, dispatch an action and get that data from the reducer itself.
+    + Don't call `getState` unecessarily to get data that's handled by the local reducer. Insead, dispatch an action and access that data from within the reducer itself.
     + Always treat data from the store as though it were immutable.    
 
 #### Reducer
@@ -108,10 +107,10 @@ export default const myReducer = (state = initialState, action) => {
 
 #### API Util
 
-- A simple utility where API calls live
+- Just a simple utility where API calls live
 - Abstaracts API calls from Actions, leaving cleaner, easier to test actions.
 - Handle any data manipulation for the sake of API calls here rather than in the action.
-- This util is especially nice for complex api calls, as it removes the mental payload of parsing `Promise` chains.
+- This util is especially nice for complex api calls, as it removes the mental payload of parsing busy `Promise` chains within actions.
 
 ## Components
 
@@ -146,9 +145,35 @@ class Home extends React.Component {
     + This form of passing data keeps these two components tightly coupled.
     + This makes your code harder to maintain, especially as your app grows and evolves. Simple data changes might force you to refactor at least 2, possibly more, components.
 
+- When passing props from one component to another, avoid passing {...this.props}
+
+```
+class Home extends React.Component {
+    render() {
+        return (
+            <div>
+                <MyComponent
+                    {...props} // :(
+                />
+            </div>
+        )
+    }
+}
+```
+
+- This is an easy design patter that can greatly increase tech debt in your app as your app grows. Avoid it!
+    + Makes parent and child component tightly couples.
+    + Has added impact of now making the parent and it's parent component tightly coupled as well, as all props are handled in that grandparent componet.
+    + Passing more `props` increases time to render (something we should avoid, especially in forms because every key stroke dispatches an onChange event. Slight decreases in perf add up when every keystroke is delayed even slightly)
+
+- Summery
+    + Always explicitly list props.
+    + Avoid passing `this.props.foo` as this leads to tight coupling. Instead prefer the connected pattern (next).
+    + Never spread props from one component to another `{...props}` as it increases time to render and forms a tight couple between 3 layers of components.
+
 #### Connected Component
 
-- A connected component is one that uses the `react-redux` connect function to pass props directly from state. It looks a little more complexs, but in practice it will greately reduce the complexity and remove the tight coupling of components from your app.
+- A connected component is one that uses the `react-redux` connect function to pass props directly from state. It looks a little more complex, but in practice it will greately reduce the complexity and remove the tight coupling of components from your app.
 
 ```
 // MyComponent.jsx
@@ -178,7 +203,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <MyComponent />
+                <MyComponent />  // :)
             </div>
         )
     }
@@ -188,13 +213,13 @@ class Home extends React.Component {
 - Using this pattern, both components are independant of one another. In other words, you could simply cut MyComponent and past it into another component, and it will work as intended.
 - Keeps data flow through your app direct and simple
 - Notice that we're not creating an external container file, importing MyComponent, and passing props to it, then exporting the container. This isn't necessary. Instead just use the `connect` function in the same file as your component, effectively making it it's own container.
-- Avoid passing to many props, as each prop passed to a component has a linier affect on slowing time to render. For example
+- Avoid passing too many props, as each prop passed to a component has a linier affect on slowing time to render. For example
 
 ```
 // avoid patterns like this, they'll cause a hit to your performance
 
 connect(state => ({
-    ...state
+    ...state // NEVER!
 }));
 
 // or even
@@ -217,10 +242,19 @@ connect(state => ({
 ```
 
 - Benefits of explicitly declaring props include:
-    + Easy to see when a component has expanded past its concern
-    + Keeps props to a minimum, decreasing time to render
+    + Easy to see when a component has expanded past its concern.
+    + Keeps props to a minimum, decreasing time to render.
 
-#### Connect cont'
+- Summery
+    + Prefer Connected Pattern over Component to Component pattern.
+    + Connected componets are simplier to maintain, and reduce tech debt significantly.
+    + When using connect, avoid the spread opporator because each prop passed hits perf.
+    + Also spread in connect obscures your props a bit. Explicit is better.
+
+#### Higher Order Components
+
+- A higher-order component is a function that takes a component and returns a new component.
+- A higher-order component (HOC) is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React's compositional nature.
 
 
 

@@ -1,5 +1,5 @@
-# Code Boundries
-## Where one module ends and another begins
+# Leveling Up In React (working title)
+## General tips and best practices when working in a React/Redux ecosystem
 How to seperate your concerns.
 
 ## React/Redux Data Flow 30 Second Review
@@ -188,7 +188,43 @@ class Home extends React.Component {
 - Using this pattern, both components are independant of one another. In other words, you could simply cut MyComponent and past it into another component, and it will work as intended.
 - Keeps data flow through your app direct and simple
 - Notice that we're not creating an external container file, importing MyComponent, and passing props to it, then exporting the container. This isn't necessary. Instead just use the `connect` function in the same file as your component, effectively making it it's own container.
+- Avoid passing to many props, as each prop passed to a component has a linier affect on slowing time to render. For example
 
-#### More on connect
+```
+// avoid patterns like this, they'll cause a hit to your performance
+
+connect(state => ({
+    ...state
+}));
+
+// or even
+
+connect(state => ({
+    movies: ...state.movies,
+    books: ...state.books,
+    tvShows: ...state.tvShows
+}));
+```
+
+Better to explicity require each prop needed for that particular component.
+
+```
+connect(state => ({
+    movieTitles: state.movies.titles,
+    bookTitles: state.books.titles,
+    tvShowTitles: state.tvShows.titles
+}));
+```
+
+- Benefits of explicitly declaring props include:
+    + Easy to see when a component has expanded past its concern
+    + Keeps props to a minimum, decreasing time to render
+
+#### Connect cont'
+
+
+
+
+
 
 

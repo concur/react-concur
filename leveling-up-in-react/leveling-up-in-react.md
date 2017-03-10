@@ -295,9 +295,9 @@ function Welcome(props) {
 ```
 
 - SFCs do not have access to state or any React lifecycle methods.
-- Simpler than Class components and easier to maintain.
-- Favor SFCs over Class components whenever possible. This keeps your components cleaner and easier to maintain.
-- Class components are best used as the root component of a view, or for components that rely on lifecycle methods. In all other cases, use SFCs.
+- Simpler than `class` components and easier to maintain. One reason for this is that givin the same input, an SFC will always have the same output. Not so with a `class` component
+- Favor SFCs over `class` components whenever possible. This keeps your components cleaner and easier to maintain.
+- `class` components are best used as the root component of a view, or for components that rely on lifecycle methods. In all other cases, use SFCs.
 
 ### Reaching into child components
 
@@ -358,7 +358,7 @@ class MyComponent extende React.Component {
 - Instead of storing data in component state, opt for making the component a connected component, and store data in the store.
 
 ```
-// Dont do this
+// Avoid
 
 class MyComponent extende React.Component {
     ....
@@ -405,3 +405,9 @@ export defautl connect(state => ({
 
 - In the example above we refactored our class component into a SFC, we stopped saving data to state and instad read data from props and pass actions through props to update data in the store.
 - This method takes a little more boilerplate work, but is vastly more maintainable in the long run.
+
+- Summery:
+    + Favor connected SFCs that leave data handling to the reducer over `class` components that store data in state, especially if the componet is meant ot be reusable.
+    + State is good for things like open state of a modal. However, it can be argued that even this data is better handled in your redux code.
+    + If a `class` component is using state, and you're forced to use `componentWillRecieveProps`, consider refactoring.
+

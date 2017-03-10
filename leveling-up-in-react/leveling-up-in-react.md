@@ -165,11 +165,12 @@ class Home extends React.Component {
     + Makes parent and child component tightly couples.
     + Has added impact of now making the parent and it's parent component tightly coupled as well, as all props are handled in that grandparent componet.
     + Passing more `props` increases time to render (something we should avoid, especially in forms because every key stroke dispatches an onChange event. Slight decreases in perf add up when every keystroke is delayed even slightly)
+    + Of course there's an exception to everything, including this. Higher Order Components often make use of `{...props}` which is fine. **Just be sure to think about when this works well and when it doesn't.**
 
 - Summery
     + Always explicitly list props.
     + Avoid passing `this.props.foo` as this leads to tight coupling. Instead prefer the connected pattern (next).
-    + Never spread props from one component to another `{...props}` as it increases time to render and forms a tight couple between 3 layers of components.
+    + Avoid spreading props from one component to another `{...props}` as it increases time to render and forms a tight couple between 3 layers of components.
 
 #### Connected Component
 
@@ -256,9 +257,67 @@ connect(state => ({
 - A higher-order component is a function that takes a component and returns a new component.
 - A higher-order component (HOC) is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React's compositional nature.
 
+```
+function logProps(WrappedComponent) {
+  return class extends React.Component {
+    componentWillReceiveProps(nextProps) {
+      console.log('Current props: ', this.props);
+      console.log('Next props: ', nextProps);
+    }
+    render() {
+      // Wraps the input component in a container, without mutating it.
+      return <WrappedComponent {...this.props} />;
+    }
+  }
+}
+```
 
+- Adds additional functionality, or injects data, into the component it wraps.
+- Good for behaviour that is needed throughout the app, or common data sets needed in several components.
+- Does come with a perf hit. If you're managing your `props` well else where, you can usually get away with this hit to perf. If you're not, your User Experiance could deminish.
 
+#### Passing Props Summery
 
+- Each prop passed comes at the expense of time to render. Avoid passing unnecessary props.
+- Favor Connected Components and Higher Order Compontents over the Component to Component pattern
+- When a component has too many props, consider breaking into several, more focused components.
+- All these rules have exceptions. Every circumstance is different.
 
+### Stateless Functional Components (SFC)
 
+- SFCs are the simplest way to declare components.
+- They are basic javascript functions that take props and return jsx.
+
+```
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+```
+
+- SFCs do not have access to state or any React lifecycle methods.
+- Simpler than Class components and easier to maintain.
+- Favor SFCs over Class components whenever possible. This keeps your components cleaner and easier to maintain.
+- Class components are best used as the root component of a view, or for components that rely on lifecycle methods. In all other cases, use SFCs.
+
+### Reaching into child components
+
+- There are two primary ways for a parent componet to reach into a child component: 1) event handlers, 2) refs.
+- Event handlers map to typical html events like `onChange`, `onBlur`, etc.
+- `Ref`s are references to DOM elements within a component.
+- `Ref`s should only be used within the component itself and not passed to child or parent componets as it creates tight coupling, and can be difficult to maintain.
+- Event handlers can be surfaced to parent componets through `props` using simple techniques like:
+```
+const MyComponent = (props) => {
+    const handleChange = (e) => {
+        doSomething();
+        props.onChange(e.target.value);
+    };
+
+    return (
+        <input value={props.value} onChange={handleChange} ... />
+    );
+}
+```
+
+- Favor event handlers over `ref`s. Avoid `ref`s when possible.
 

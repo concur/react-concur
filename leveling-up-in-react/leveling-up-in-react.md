@@ -161,8 +161,8 @@ class Home extends React.Component {
 }
 ```
 
-- This is an easy design patter that can greatly increase tech debt in your app as your app grows. Avoid it!
-    + Makes parent and child component tightly couples.
+- This is an easy design pattern that can greatly increase tech debt in your app as your app grows. Avoid it!
+    + Makes parent and child component tightly coupled.
     + Has added impact of now making the parent and it's parent component tightly coupled as well, as all props are handled in that grandparent componet.
     + Passing more `props` increases time to render (something we should avoid, especially in forms because every key stroke dispatches an onChange event. Slight decreases in perf add up when every keystroke is delayed even slightly)
     + Of course there's an exception to everything, including this. Higher Order Components often make use of `{...props}` which is fine. **Just be sure to think about when this works well and when it doesn't.**

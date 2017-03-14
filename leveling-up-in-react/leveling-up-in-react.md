@@ -14,7 +14,7 @@ medium: [@scbarrus](https://medium.com/@scbarrus)
 ### React/Redux Data Flow 30 Second Review
 
 - Our redux code lives in a module (sometimes refered to as DUCKS)
-    + With ducks, we store all our related constants, actions, action creators, and reducer in a single file.
+    + With DUCKS, we store all our related constants, actions, action creators, and reducer in a single file.
     + If another module needs to listen for a particular constant or needs to dispatch a particular action, we export the action here and import it where needed.
 
 ---
@@ -179,11 +179,11 @@ const complexAddToDo = (toDo) => {
 
 ---
 
-## Actions Summery
+## Actions Summary
 
 - Keep actions pure and simple.
 - `thunk` and `promise` middleware add power, but with great power comes great responsibility.
-- API calls live in a seperate util.
+- API calls live in a separate util.
 
 ---
 
@@ -193,7 +193,7 @@ const complexAddToDo = (toDo) => {
 
 ### Redux Modules > Reducer
 
-- The Reducer specifies how the applications state changes in response to an action.
+- The reducer specifies how the applications state changes in response to an action.
 
 ---
 
@@ -204,7 +204,7 @@ const ADD_TODO = '@todoModule/ADD_TODO'; // Constant
 
 const initalState = []
 
-export default const myReducer = (state = initialState, action) => {
+export default const myReducer = (state = initialState, action = {}) => {
     switch (action.type) {
         case ADD_TODO:
             return [
@@ -212,7 +212,7 @@ export default const myReducer = (state = initialState, action) => {
                 action.payload,
                 ...state.slice(action.index, state.length + 1)
             ]
-        defualt:
+        default:
             return [
                 ...state
             ];
@@ -242,7 +242,7 @@ const RESET_EXPENSE_STATE = '@expenseHome/RESET_EXPENSE_STATE';
 // expenseItemizationModule.js
 import {RESET_EXPENSE_STATE} from '../expenseHomeModule';
 
-export default const myReducer = (state = initialState, action) => {
+export default const myReducer = (state = initialState, action = {}) => {
     switch (action.type) {
         ....
         case RESET_EXPENSE_STATE:
@@ -264,7 +264,8 @@ export default const myReducer = (state = initialState, action) => {
 - **Ok:** `const SUBMIT_REPORT = 'SUBMIT_REPORT'`
 - **Better:** `const SUBMIT_REPORT = '@report/SUBMIT_REPORT`
     - Leads to simpler debugging.
-    - Reduces the likelyhood of constants from other modules conflicting.
+    - Reduces the likelihood of constants from other modules conflicting.
+    - Ensure a consistent naming strategy to group constants together as a family.
 
 
 ---
@@ -340,7 +341,7 @@ class Home extends React.Component {
 - **Not good for:**
     + A large number of props.
     + Passing actions to child component.
-    + Passing data from redux store to child component.
+    + Passing data from Redux store to child component.
     + Passing `{...props}`.
 
 ---
@@ -374,7 +375,7 @@ class Home extends React.Component {
 ## Passing props from state
 
 - **Good when...**
-    + ...data is local to component, and child component is reusible, presentational (dumb) component. *ie. open state of a modal*
+    + ...data is local to component, and child component is reusable, presentational (dumb) component. *ie. open state of a modal*
 - **Not good when...**
     + ...data is better handled in the redux reducer. *ie. data is required for multiple components*
 
@@ -465,7 +466,7 @@ class Home extends React.Component {
 - **The Good**:
     - Greately reduces the code complexity.
     - Removes tight coupling of components.
-    - Act's as documentation on actions your components depend on.
+    - Acts as documentation on actions your components depend on.
 - **The Bad**:
     - Requires more boilerplate code.
 
@@ -521,7 +522,7 @@ class Home extends React.Component {
 - Using this pattern, both components are independant of one another.
     - It can be dropped anywhere and will always work as intended.
 - Keeps data flow through your app direct and simple.
-- No need to create a seperate container file. That simply adds complexity without any real benefit.
+- No need to create a separate container file. That simply adds complexity without any real benefit.
 
 ---
 
@@ -570,7 +571,7 @@ connect(state => ({
 ---
 
 ### Components > Props > Connected Component
-## Summery
+## Summary
 
 + Prefer Connected Pattern over Component to Component pattern.
 + Connected componets are simplier to maintain, and reduce tech debt significantly.
@@ -616,7 +617,7 @@ function logProps(WrappedComponent) {
 - **Good for:**
     - Behaviour that is needed throughout the app.
     - Common data sets needed in several components.
-- **Warning:** HOCs can hurt performance. If you're managing your `props` well else where, you can usually get away with this. If you're not, your User Experiance could deminish.
+- **Warning:** HOCs can hurt performance. If you're managing your `props` well else where, you can usually get away with this. If you're not, your User Experience could deminish.
 
 ---
 
@@ -648,8 +649,8 @@ function logProps(WrappedComponent) {
     + Very powerful.
     + Have access to lifecycle methods and `this.state`.
 - **The bad:**
-    + Can easily become over complicated, too big, or unweildly.
-    + `this.state` is the source of many bugs. Better to handle data in the redux module in most cases.
+    + Can easily become over complicated, too big, or unwieldy.
+    + `this.state` is the source of many bugs. Better to handle data in the Redux module in most cases.
 
 ---
 
@@ -661,7 +662,7 @@ function logProps(WrappedComponent) {
 ### Components > Stateless Functional Components
 
 - SFCs are the simplest way to declare components.
-- They are basic javascript functions that take props and return jsx.
+- They are basic JavaScript functions that take props and return jsx.
 
 ---
 
@@ -705,7 +706,7 @@ function Welcome(props) {
 
 ### Components > Refs
 
-- There are two primary ways for a parent componet to reach into a child component
+- There are two primary ways for a parent component to reach into a child component
     -  surfacing values or methods (such as event hanlders) through props.
     -  refs.
 - `ref`s are generally references to DOM elements within a component.
@@ -734,7 +735,7 @@ render() {
     + Occasionally helpful. Occasionally.
 - **The bad**
     + Increase function calls and property merging.
-    + Can obscure a components dependencies.
+    + Can obscure a component's dependencies.
     + Can easily lead to tight coupling and debugging nightmares.
 - Favor surfacing values or methods through props over `ref`s.
 
@@ -746,7 +747,7 @@ render() {
 
 ### Components > State
 
-- There are several ways to handle the state of a particular component. Let's look at some of the methods and compair.
+- There are several ways to handle the state of a particular component. Let's look at some of the methods and compare.
 - `class` components have access to `this.state` whereas SFCs do not.
 - Accessing and updating a components state is relatively painless.
 
@@ -782,7 +783,7 @@ class MyComponent extends React.Component {
 ### Components > State
 
 - **The bad:**
-    + Relying on component state too much can make components difficult to reuse and maintain.
+    + Relying on component state too much can make components difficult to re-use and maintain.
     + As components multiply, frequent state manipulation can add to your technical debt.
     + Storing data in state can lead to components being too encapsulated.
 
@@ -792,7 +793,7 @@ class MyComponent extends React.Component {
 
 ## General State tips
 
-- If you need to use 'componentWillRecieveProps' to fit some data change into the component, consider refactoring it to read data from the redux store instead.
+- If you need to use 'componentWillReceiveProps' to fit some data change into the component, consider refactoring it to read data from the Redux store instead.
 - If the component uses state, but doesn't use any lifecycle methods, refactor it into a connected SFC.
 - If the component uses state AND lifecycle methods, refactor it to become a connected class component.
 
@@ -808,7 +809,7 @@ class MyComponent extends React.Component {
 
 ### Components > State
 
-+ It can be argued that even this data is better handled in your redux code.
++ It can be argued that even this data is better handled in your Redux code.
 + If a `class` component is using state, and you're forced to use `componentWillRecieveProps`, consider refactoring.
 
 ---

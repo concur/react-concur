@@ -29,9 +29,9 @@ medium: [@scbarrus](https://medium.com/@scbarrus)
 
 ### React/Redux Data Flow 30 Second Review
 
-- The action passes updated data it to the reducer.
+- The action passes updated data to the reducer.
 - The reducer updates the store.
-- Updated data through props to the componet.
+- Updated data is passed through props to the component.
 
 ---
 

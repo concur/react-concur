@@ -7,6 +7,14 @@ medium: [@scbarrus](https://medium.com/@scbarrus)
 
 ---
 
+## Clean Code
+
+- Easy to understand
+- Easy to change
+- Good seperation of concerns
+
+---
+
 ## React/Redux Data Flow 30 Second Review
 
 ---
@@ -618,6 +626,53 @@ function logProps(WrappedComponent) {
     - Behaviour that is needed throughout the app.
     - Common data sets needed in several components.
 - **Warning:** HOCs can hurt performance. If you're managing your `props` well else where, you can usually get away with this. If you're not, your User Experience could deminish.
+
+---
+
+## Handling Data
+
+- Where should I manipulate data?
+    + Component
+    + mapStateToProps
+    + Redux module
+
+---
+
+### Components > Props > Handling Data
+
+- Data is used to render the view:
+    + Pass data through props
+    + manipulate in the component
+
+---
+
+### Components > Props > Handling Data
+
+- Data is used to render the view but may change based on state:
+    + Pass data through mapStateToProps
+    + manipulate in the mapStateToProps function before passing to props
+
+---
+
+### Components > Props > Handling Data
+
+```javascript
+
+const mapStateToProps = state => {
+    return {
+        showModal: state.thing.isAwesome && state.otherThing.isGreat
+    }
+}
+
+```
+
+---
+
+### Components > Props > Handling Data
+
+- Data is used to update state based on user action
+    + Dispatch action from component
+    + Handle data manipulation in module
 
 ---
 

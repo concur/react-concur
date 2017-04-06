@@ -101,50 +101,149 @@ class MyComponent extends React.Component {
 
 ---
 
-## When props change, Componet Lifecycle begins
+## Component Lifecycle
+
+### Mounting
+- `constructor()`
+- `componentWillMount()`
+- `render()`
+- `componentDidMount`
 
 ---
 
-# Components recieve data through props
+### Lifecycle continued
 
+###Updating
+- `componentWillReceiveProps()`
+- `shouldComponentUpdate()`
+- `componentWillUpdate()`
+- `render()`
+- `componentDidUpdate()`
+
+---
+
+## Stateless Functional Components
+
+- A function that returns JSX
+- No access lifecycle methods
+
+---
+
+## Redux
+### The data layer
+
+---
+
+- Actions
+- Reducers
+- Store
+- Data flow
+- Working with React
+
+---
+
+## Features
+
+- Single source of state
+- Unidirectional data flow
+
+---
+
+## Actions
+
+- Actions are payloads of information that send datat from your application to your store.
+- Actions are plain javascript objects with a type key
+
+---
+
+```javascript
+const ADD_TODO = 'ADD_TODO'
+{
+  type: ADD_TODO,
+  text: 'Build my first Redux app'
+}
 ```
 
+---
+
+## Reducers
+
+- Reducers recieve actions and update app state
+- State is stored in a single object
+
+---
+
+## How Reducers work
+
+```javascript
+function myReducer(state, action) {
+    switch (action.type) {
+        case ADD_TODO:
+            return {
+                data: action.payload
+            //new state
+            };
+        default:
+            return {
+                ...state
+            }
+    }
+}
 ```
 
 ---
 
-## JSX
+## Store
 
-```JavaScript
-// JSX
-<h1 className="heading">Hello, world! I am an H1.</h1>
+- Holds app state
+- Allows access to state through `getState()`
+- Allows state to be updated through `dispatch(action)`
+- Registers listeners through `subscribe(listener)`
+- Handles unregestering of listeners through function returned by `subscribe(listener)`
 
-// Compiles to this
-React.createElement('h1', {className: "heading"},
-    "Hello, world! I am an H1."
-)
+---
+
+- Redux apps have a single store
+- Complexity is handled through reducer composition
+
+---
+
+## Data Flow
+
+---
+
+### Step 1: call `dispatch(action)`
+
+```javascript
+dispatch({ type: MY_ACTION, payload: {mydata}});
+
+or
+
+const action = (data) => {
+    return {
+        type: MY_ACTION,
+        payload: data
+    };
+};
+
+dispatch(action(data));
 ```
 
 ---
 
-## Components
+### Step 2: Redux store calls the reducer function
 
-- `class` components
-- Stateless components
-
----
-
-## Lifecycle Methods
-
-![left](./react-lifecycle.png)
+- Store passes the current state tree and action to the reducers
+- Reducer only computes next state. It is a pure function.
 
 ---
 
-## Uni-directional Data
+### Step 3: Root reducer may combine output of multiple reducers into a single state tree
 
----
+- Using `combineReducers()`, redux passes action through all reducers
+- 
 
-## React Native
-## Isomorphic Rendering
 
----
+
+
+

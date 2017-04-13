@@ -1,30 +1,41 @@
----
 
 # High Level React
+
+![](bricks.jpg)
 
 ---
 
 # The Ecosystem
+
+![](forest.jpg)
 
 ---
 
 # React
 ## The view layer
 
+![](view.jpg)
+
 ---
 
 # Redux
 ## The data layer
+
+![](data.jpg)
 
 ---
 
 # Babel
 ## The transpiler
 
+![](butterfly.jpg)
+
 ---
 
 # Webpack
 ## The code bundler
+
+![](bundle.jpg)
 
 ---
 
@@ -35,25 +46,31 @@
 - Lifecycle
 - JSX
 
+![](features.jpg)
+
 ---
 
 # Components
 
-- The building blocks of react
+## The building blocks of react
+
+![](components.jpg)
 
 ---
 
 ```javascript
-const MyComponent = () => { // Stateless Functional Component
+// Stateless Functional Component
+const MyComponent = () => {
     return (
-        <div>Hi<//div> // JSX
+        <div>Hi</div> // JSX
     );
 };
 
-class MyComponent extends React.Component { // Class Component
+// Class Component
+class MyComponent extends React.Component {
     render() { // render lifecycle method
         return (
-            <div>Hi<//div> // JSX
+            <div>Hi</div> // JSX
         )
     }
 }
@@ -68,12 +85,14 @@ class MyComponent extends React.Component { // Class Component
 - No access to component `state`
 - Simplest implementation of a component
 
+![](skateboard.jpg)
+
 ---
 
 ```javascript
 const MyComponent = () => { // Stateless Functional Component
     return (
-        <div>Hi<//div> // JSX
+        <div>Hi</div> // JSX
     );
 };
 ```
@@ -84,6 +103,8 @@ const MyComponent = () => { // Stateless Functional Component
 
 - A `class` with the the `render()` method which returns JSX
 - Has access to lifecycle methods and `this.state`
+
+![](car.jpg)
 
 ---
 
@@ -112,14 +133,14 @@ const MyComponent = () => { // Stateless Functional Component
 ```javascript
 const MyComponent = (props) => {
     return (
-        <div>{props.hi}<//div>
+        <div>{props.hi}</div>
     );
 };
 
 class MyComponent extends React.Component {
     render() {
         return (
-            <div>{this.props.hi}<//div>
+            <div>{this.props.hi}</div>
         )
     }
 }
@@ -135,16 +156,20 @@ class MyComponent extends React.Component {
 - `render()`
 - `componentDidMount()`
 
+![](life.jpg)
+
 ---
 
-### Lifecycle continued
+# Lifecycle continued
 
-###Updating
+## Updating
 - `componentWillReceiveProps()`
 - `shouldComponentUpdate()`
 - `componentWillUpdate()`
 - `render()`
 - `componentDidUpdate()`
+
+![](life2.jpg)
 
 ---
 
@@ -155,9 +180,11 @@ class MyComponent extends React.Component {
 - Is transpiled into JavaScript at build time
 - Not required
 
+![](html.jpg)
+
 ---
 
-```javascript
+```html
 <div>
     <MyComponent
         onClick={(e) => { // event handlers
@@ -169,7 +196,7 @@ class MyComponent extends React.Component {
         className='important' // CSS classes
         myValue={foo ? 'fizz' : 'buzz'} // props
     />
-<//div>
+</div>
 ```
 
 ---
@@ -177,14 +204,21 @@ class MyComponent extends React.Component {
 # Redux
 ## The data layer
 
+![](building.jpg)
 
 ---
 
-## Features
+![fit](redux-state.png)
+
+---
+
+# Features
 
 - Single source of state
 - Unidirectional data flow
 - Library to integrate with React
+
+![](bike trail.jpg)
 
 ---
 
@@ -194,12 +228,20 @@ class MyComponent extends React.Component {
 - Data flow
 - Working with React
 
+![](blanket.jpg)
+
 ---
 
 ## Actions
 
-- Actions are payloads of information that send datat from your application to your store.
+- Actions are payloads of information that send data from your application to your store.
 - Actions are plain javascript objects with a type key
+
+![](action.jpg)
+
+---
+
+![fit](dispatch.png)
 
 ---
 
@@ -218,6 +260,12 @@ const ADD_TODO = 'ADD_TODO'
 - Reducers recieve actions and update app state
 - State is stored in a single object
 
+![](bug.jpg)
+
+---
+
+![fit](reducer.png)
+
 ---
 
 ## How Reducers work
@@ -226,9 +274,8 @@ const ADD_TODO = 'ADD_TODO'
 function myReducer(state, action) {
     switch (action.type) {
         case ADD_TODO:
-            return {
+            return { //new state
                 data: action.payload
-            //new state
             };
         default:
             return {
@@ -240,7 +287,7 @@ function myReducer(state, action) {
 
 ---
 
-## Store
+# Store
 
 - Holds app state
 - Allows access to state through `getState()`
@@ -248,18 +295,37 @@ function myReducer(state, action) {
 - Registers listeners through `subscribe(listener)`
 - Handles unregestering of listeners through function returned by `subscribe(listener)`
 
+![](store.jpg)
+
 ---
 
+- `state` is read only
 - Redux apps have a single store
 - Complexity is handled through reducer composition
 
----
-
-## Data Flow
+![](books.jpg)
 
 ---
 
-### Step 1: call `dispatch(action)`
+  "The shape of the state is up to you:
+  it can be a primitive, an array, an object, 
+  or even an Immutable.js data structure. The 
+  only important part is that you should not 
+  mutate the state object, but return a new 
+  object if the state changes." 
+  -- Redux docs
+
+![](cookies.jpg)
+
+---
+
+# Data Flow
+
+![](stream.jpg)
+
+---
+
+# Step 1: call `dispatch(action)`
 
 ```javascript
 dispatch({ type: MY_ACTION, payload: {mydata}});
@@ -278,10 +344,13 @@ dispatch(action(data));
 
 ---
 
-### Step 2: Redux store calls the reducer function
+# Step 2: Redux store calls the reducer function
 
-- Store passes the current state tree and action to the reducers
-- Reducer only computes next state. It is a pure function.
+- Store passes the current state tree and action to the reducers.
+- Reducer only computes next state.
+- Reducers are pure function functions.
+
+![](call.jpg)
 
 ---
 
@@ -309,10 +378,16 @@ dispatch(action(data));
 
 ---
 
-### Step 3: Root reducer may combine output of multiple reducers into a single state tree
+# Step 3: Root reducer may combine output of multiple reducers into a single state tree
 
 - Using `combineReducers()`, redux passes action through all reducers
 - Returns a single state tree
+
+![](roots.jpg)
+
+---
+
+![fit](compose.png)
 
 ---
 
@@ -347,7 +422,7 @@ return { // return value of combineReducers
 
 ---
 
-### Step 4: Redux store saves complete state tree returned by reducer
+# Step 4: Redux store saves complete state tree returned by reducer
 
 - This is new state tree is the state of your app.
 
@@ -356,6 +431,8 @@ return { // return value of combineReducers
 # React + Redux
 ## Using `react-redux` library
 
+![](library.jpg)
+
 ---
 
 ## Giving Components Access to the App State
@@ -363,6 +440,8 @@ return { // return value of combineReducers
 - Data is passed to React components through 'container' components.
 - Container components are generally HOC's (higher order components) created by the `connect` function
 - Container components have direct access to the redux store via the `mapStateToProps` argument.
+
+![](jail.jpg)
 
 ---
 
@@ -373,8 +452,8 @@ const MyComponent = (props) => {
     return (
         <div>
             {props.prop1}
-            <OtherComponent value={props.prop2}//>
-        <//div>
+            <OtherComponent value={props.prop2} />
+        </div>
     );
 };
 
@@ -395,6 +474,8 @@ export default connect(mapStateToProps)(MyComponent);
 - Actions can be imported where needed, but cannot be called without `store.dispatch`.
 - Container components get access to dispatch actions through the `mapDispatchToProps` argument of the `connect` function.
 
+![](radio.jpg)
+
 ---
 
 ```javascript
@@ -409,7 +490,7 @@ const MyComponent = (props) => {
             onBlur={props.prop2}
         >
             ...
-        <//div>
+        </div>
     );
 };
 
@@ -424,7 +505,7 @@ export default connect(null, mapDispatchToProps)(MyComponent);
 ---
 
 ## Now you have a fully working React ecosystem
-### Go forth and build!
+### Go and build!
 
 
 

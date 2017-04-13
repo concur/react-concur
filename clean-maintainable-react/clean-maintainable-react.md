@@ -527,8 +527,13 @@ class Home extends React.Component {
     - Greately reduces the code complexity.
     - Removes tight coupling of components.
     - Acts as documentation on actions your components depend on.
+
+---
+
+#### Components > Props > Connected Component
+
 - **The Bad**:
-    - Requires more boilerplate code.
+    - Requires a little more boilerplate code.
 
 ---
 
@@ -543,7 +548,7 @@ const MyComponent = ({ prop1, prop2, prop3 }) => {
         <div>
             {`I am a ${prop1} that ${prop2} when ${prop3}`}
             ....
-        <//div>
+        </div>
     )
 }
 
@@ -569,7 +574,7 @@ class Home extends React.Component {
         return (
             <div>
                 <MyComponent />  // :) State data is already mapped to props
-            <//div>
+            </div>
         )
     }
 }
@@ -579,8 +584,13 @@ class Home extends React.Component {
 
 #### Components > Props > Connected Component
 
-- Using this pattern, both components are independant of one another.
-    - It can be dropped anywhere and will always work as intended.
+- Both components are independant of one another.
+- It can be dropped anywhere and will always work as intended.
+
+---
+
+#### Components > Props > Connected Component
+
 - Keeps data flow through your app direct and simple.
 - No need to create a separate container file. That simply adds complexity without any real benefit.
 
@@ -592,15 +602,10 @@ class Home extends React.Component {
 
 ```javascript
 // avoid patterns like this, they'll cause a hit to your performance
+// and obfuscate your dependencies
 
 connect(state => ({
     ...state // Nope!
-}));
-
-connect(state => ({
-    movies: ...state.movies, // Nah
-    books: ...state.books, // Negative
-    tvShows: ...state.tvShows // No bueno 
 }));
 ```
 
@@ -611,8 +616,6 @@ connect(state => ({
 - Instead, explicity require each prop needed for that particular component.
 
 ```javascript
-// looks good!
-
 connect(state => ({
     movieTitles: state.movies.titles,
     bookTitles: state.books.titles,
@@ -625,6 +628,7 @@ connect(state => ({
 #### Components > Props > Connected Component
 
 - Benefits of explicitly declaring props include:
+    + Simple to read.
     + Easy to see when a component has expanded past its concern.
     + Only maps required props, decreasing time to render.
 
@@ -635,12 +639,15 @@ connect(state => ({
 
 + Prefer Connected Pattern over Component to Component pattern.
 + Connected componets are simplier to maintain, and reduce tech debt significantly.
-+ When using connect, avoid the spread opporator because each prop passed hits perf.
-+ Also spread in connect obscures your props a bit. Explicit is better.
++ Don't spread state.
++ Be explicit.
 
 ---
 
-## Higher Order Components (HOC)
+### Passing Props
+# Higher Order Components (HOC)
+
+![fit](tall cliff.jpg)
 
 ---
 
@@ -648,7 +655,7 @@ connect(state => ({
 
 - A function that takes a component and returns a new component.
 - Good for reusing component logic.
-- HOCs make it easy to layer on behavior while maintaining a separation of concerns.
+- Make it easy to layer on behavior while maintaining a separation of concerns.
 
 ---
 
@@ -677,16 +684,29 @@ function logProps(WrappedComponent) {
 - **Good for:**
     - Behaviour that is needed throughout the app.
     - Common data sets needed in several components.
-- **Warning:** HOCs can hurt performance. If you're managing your `props` well else where, you can usually get away with this. If you're not, your User Experience could deminish.
 
 ---
 
-## Handling Data
+#### Components > Props > Higher Order Components
 
-- Where should I manipulate data?
-    + Component
-    + mapStateToProps
-    + Redux module
+- **Warning:** Excessive use of HOCs can hurt performance.
+- If you manage your `props` well, the hit will be small.
+- If not, your User Experience could deminish.
+
+---
+
+### Components
+# Handling Data
+
+![](handles.jpg)
+
+---
+
+# Where should I manipulate data?
+ 
+- Component
+- mapStateToProps
+- Redux module
 
 ---
 
@@ -728,25 +748,31 @@ const mapStateToProps = state => {
 
 ---
 
-#### Components > Props
+### Components
 
-## Props Summery
+# Props Summery
+
+![](chalkboard.jpg)
+
+---
 
 - Avoid passing unnecessary props.
 - Connected Components **>** Higher Order Compontents **>** Component to Component.
-- When a component has too many props, consider breaking into several, more focused components.
+- Break components requiring too many props into several, more focused components.
 - All these rules have exceptions. Every circumstance is different.
 
 ---
 
-## Class Components
-### Also applies to `React.createClass` components
+### Components
+# Class Components
+
+![](class.jpg)
 
 ---
 
 #### Components > Class Components
 
-- The basic building block of every React app
+**The basic building block of every React app**
 
 ---
 
@@ -755,20 +781,27 @@ const mapStateToProps = state => {
 - **The good:**
     + Very powerful.
     + Have access to lifecycle methods and `this.state`.
-- **The bad:**
-    + Can easily become over complicated, too big, or unwieldy.
-    + `this.state` is the source of many bugs. Better to handle data in the Redux module in most cases.
 
 ---
 
-## Stateless Functional Components
-### SFCs
+#### Components > Class Components
+
+- **The bad:**
+    + Can easily become over complicated, too big, or difficult to maintain.
+    + `this.state` is the source of many bugs. Better to handle data in the Redux module or through props in most cases.
+
+---
+
+### Components
+# Stateless Functional Components (SFCs)
+
+![](desk.jpg)
 
 ---
 
 #### Components > Stateless Functional Components
 
-- SFCs are the simplest way to declare components.
+- The simplest way to declare components.
 - They are basic JavaScript functions that take props and return jsx.
 
 ---
@@ -776,8 +809,16 @@ const mapStateToProps = state => {
 #### Components > Stateless Functional Components
 
 ```javascript
-function Welcome(props) {
-  return <h1>Hello, {props.name}<//h1>;
+const Welcome = (props) => <h1>Hello, {props.name}</h1>;
+
+const Fairwell = ({prop1, prop2}) => {
+    const calculateThings = (prop1, prop2) => {
+        return prop1 + prop2;
+    }
+
+    return (
+        <div>{calculateThings()}</div>
+    )
 }
 ```
 
@@ -786,9 +827,9 @@ function Welcome(props) {
 #### Components > Stateless Functional Components
 
 - **The good:**
-    + Simpler than `class` components and easier to maintain.
+    + Simpler & easier to maintain than `class` components.
     + Givin the same input, an SFC will always have the same output. *Not so with a `class` component*
-    + Do not have access to `state` -- yes, that is a good thing ;)
+    + Do not have access to `state` -- yes, that's a good thing ;)
 
 ---
 
@@ -803,20 +844,24 @@ function Welcome(props) {
 #### Components > Stateless Functional Components
 
 - SFCs **>** `class` components.
-- `class` components are best used as the root component of a view, or for components that rely on lifecycle methods. *In all other cases, use SFCs.*
+- `class` components are best used as the root component of a view, or for components that rely on lifecycle methods.
+- *In all other cases, use SFCs.*
 
 ---
 
-## Refs
+### Components
+# Refs
+
+![](arrows.jpg)
 
 ---
 
 #### Components > Refs
 
-- There are two primary ways for a parent component to reach into a child component
+- `ref`s are generally references to DOM elements within a component.
+- There are two ways for a parent component to reach into a child component
     -  surfacing values or methods (such as event hanlders) through props.
     -  refs.
-- `ref`s are generally references to DOM elements within a component.
 
 ---
 
@@ -839,22 +884,38 @@ render() {
 #### Components > Refs
 
 - **The good:**
-    + Occasionally helpful. Occasionally.
+    + Occasionally helpful.
+    + Occasionally...
+
+---
+
+#### Components > Refs
+
 - **The bad**
     + Increase function calls and property merging.
     + Can obscure a component's dependencies.
     + Can easily lead to tight coupling and debugging nightmares.
+
+---
+
+#### Components > Refs
+
+# Summery
+
 - Favor surfacing values or methods through props over `ref`s.
 
 ---
 
-### State
+### Components
+# State
+
+![](bag.jpg)
 
 ---
 
 #### Components > State
 
-- There are several ways to handle the state of a particular component. Let's look at some of the methods and compare.
+- There are several ways to handle the component state.
 - `class` components have access to `this.state` whereas SFCs do not.
 - Accessing and updating a components state is relatively painless.
 
@@ -892,7 +953,14 @@ class MyComponent extends React.Component {
 - **The bad:**
     + Relying on component state too much can make components difficult to re-use and maintain.
     + As components multiply, frequent state manipulation can add to your technical debt.
+
+---
+
+#### Components > State
+
+- **The bad continued:**
     + Storing data in state can lead to components being too encapsulated.
+    This makes them difficult to work with.
 
 ---
 
@@ -900,8 +968,18 @@ class MyComponent extends React.Component {
 
 ## General State tips
 
-- If you need to use 'componentWillReceiveProps' to fit some data change into the component, consider refactoring it to read data from the Redux store instead.
+- If you need to use 'componentWillReceiveProps' to fit some data change into the component, refactor it to read data from the Redux store instead.
+
+---
+
+#### Components > State
+
 - If the component uses state, but doesn't use any lifecycle methods, refactor it into a connected SFC.
+
+---
+
+#### Components > State
+
 - If the component uses state AND lifecycle methods, refactor it to become a connected class component.
 
 ---
@@ -921,5 +999,8 @@ class MyComponent extends React.Component {
 
 ---
 
-Hopefully you learned something new. Do you have a tip or best practice not listed here? Leave it in the comments!
+# In Conclusion
+## Be excelent to each other and leave code a little better than you found it.
+
+![](billted.jpeg)
 

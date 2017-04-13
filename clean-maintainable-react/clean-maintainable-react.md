@@ -2,53 +2,78 @@
 ### Tips and Best Practices for Clean, Reliable & Maintainable Code
 
 by Cody Barrus
-github: [@goopscoop](https://github.com/goopscoop)
-medium: [@scbarrus](https://medium.com/@scbarrus)
+
+![](construction.jpg)
 
 ---
 
-## Clean Code
+# Clean Code
 
 - Easy to understand
 - Easy to change
-- Good seperation of concerns
 
 ---
 
-## React/Redux Data Flow 30 Second Review
+# Code that isn't clean rots
+
+Code rot is the slow deterioration of code over time that will eventually lead to code that is either tightly coupled, filled with technical debt, or difficult to maintain.
 
 ---
 
-### React/Redux Data Flow 30 Second Review
+# React/Redux Data Flow
+## *In 30 seconds!*
 
-- Our redux code lives in a module (sometimes refered to as DUCKS)
-    + With DUCKS, we store all our related constants, actions, action creators, and reducer in a single file.
-    + If another module needs to listen for a particular constant or needs to dispatch a particular action, we export the action here and import it where needed.
+![](mirror.jpg)
 
 ---
 
-### React/Redux Data Flow 30 Second Review
-
-- Data lives in the reducer.
-- `react-redux`'s connect function passes data to the component through props.
-- The component displays the data and listens to events which dispatch an action.
+![fit](reduxlifecycle.png)
 
 ---
 
 ### React/Redux Data Flow 30 Second Review
 
-- The action passes updated data to the reducer.
+- Our redux code lives in a module
+    + Called DUCKS
+    + All related constants, actions/action creators, and the reducer are in a single file.
+
+
+---
+
+### React/Redux Data Flow 30 Second Review
+
+- An action is  `dispatch()`ed
+- Passes data to the reducer.
 - The reducer updates the store.
-- Updated data is passed through props to the component.
+
+
+---
+
+### React/Redux Data Flow 30 Second Review
+
+- The store sends new data via `connect()` to component props.
+- `class` component calls render lifecycle, and updates the view.
+- Stateless Functional Component (SFC) is called and returns updated view.
+
+
+---
+
+### React/Redux Data Flow 30 Second Review
+
+- Component listens to events which `dispatch()` next action via `connect()`.
+- Repeat.
+
 
 ---
 
 # Redux Modules
 ## The data layer
 
+![](cake.jpg)
+
 ---
 
-### Redux Modules
+#### Redux Modules
 
 - Modules consist of
     + Constants
@@ -57,24 +82,26 @@ medium: [@scbarrus](https://medium.com/@scbarrus)
 
 ---
 
-### Redux Modules
+#### Redux Modules
 
 # Actions
 
+![](fourwheels.jpg)
+
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 
 - Actions are payloads of information that send data from your application to your store.
 - They are the only source of information for the store.
-- You send them to the store using `store.dispatch()`
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 
 ```javascript
-const ADD_TODO = '@todos/ADD_TODO' // Constant
+// Constant 
+const ADD_TODO = '@todos/ADD_TODO'
 
 // Action
 {
@@ -85,7 +112,7 @@ const ADD_TODO = '@todos/ADD_TODO' // Constant
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 
 - A simple action just passes data and a type to the reducer
 
@@ -98,7 +125,7 @@ const addToDo = (toDo) => ({
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 
 - Actions can take advantage of the `thunk` and `promise` middlewhere.
     - Adds flexibility to your Actions by giving them access to `state` and allowing them to return promises.
@@ -106,9 +133,10 @@ const addToDo = (toDo) => ({
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 
 ```javascript
+import {getLists} from 'apiCalls';
 
 // Arbitrary example
 const complexAddToDo = (toDo) => {
@@ -128,39 +156,45 @@ const complexAddToDo = (toDo) => {
 
 ---
 
-### Redux Modules > Actions
+## Functions should only do one thing and do it well.
+
+---
+
+#### Redux Modules > Actions
 ## A few pointers to keep these actions reasonable:
 
-+ Keep complexity out of your Actions. Pure Actions (w/o side effects) are best actions.
++ Keep complexity out of your Actions.
++ Keep Actions pure (w/o side effects).
 + Prefer data manipulation in the reducer.
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 
-+ Keep API calls in their own util. This keeps your actions cleaner, and simpler to unit test.
-    * Handle necessary data manipulation for API calls in this util rather than in the action.
+- Keep API calls in their own util.
+    + Keeps actions cleaner
+    + Is simpler to unit test
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 ## getState
 
-+ Don't call `getState` unecessarily. For example, don't...
-    + use `getState` for getting data that's handled by the local reducer. Insead, dispatch an action and access that data from within the reducer itself.
-    + call `getState` more than once.
++ Don't call `getState` unecessarily.
++ Don't use `getState` for getting data that's handled by the local reducer.
+    + Insead, dispatch an action and access data in the reducer.
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 ## getState continued
 
-+ Call `getState` only once, and near the top of your function.
++ Call `getState` only once near the top of your function.
 + Always treat data from the store as though it were immutable.
 
 ---
 
-### Redux Modules > Actions
+#### Redux Modules > Actions
 
 ```javascript
 const complexAddToDo = (toDo) => {
@@ -178,70 +212,72 @@ const complexAddToDo = (toDo) => {
 
 ---
 
-### Redux Modules > Actions
-## API Util
-
-- Abstaracts API calls from Actions, leaving cleaner, easier to test actions.
-- Handle any data manipulation for the sake of API calls here rather than in the action.
-- This util is especially nice for complex api calls, as it removes the mental payload of parsing busy `Promise` chains within actions.
-
----
-
 ## Actions Summary
 
 - Keep actions pure and simple.
-- `thunk` and `promise` middleware add power, but with great power comes great responsibility.
 - API calls live in a separate util.
+- `thunk` and `promise` middleware add power, but with great power comes great responsibility.
 
 ---
 
+#### Redux Modules
 # Reducer
 
----
-
-### Redux Modules > Reducer
-
-- The reducer specifies how the applications state changes in response to an action.
+![](bird.jpg)
 
 ---
 
-### Redux Modules > Reducer
+#### Redux Modules > Reducer
+
+- The reducer handles state changes in response to an action.
+
+---
+
+#### Redux Modules > Reducer
 
 ```javascript
-const ADD_TODO = '@todoModule/ADD_TODO'; // Constant
+const CHANGE_THING = '@todoModule/CHANGE_THING';
 
-const initalState = []
+const initalState = {
+    thing: ''
+}
 
 export default const myReducer = (state = initialState, action = {}) => {
     switch (action.type) {
-        case ADD_TODO:
-            return [
-                ...state.slice(0, action.index),
-                action.payload,
-                ...state.slice(action.index, state.length + 1)
-            ]
+        case CHANGE_THING:
+            return {
+                ...state,
+                thing: action.value
+            }
         default:
-            return [
+            return {
                 ...state
-            ];
+            };
     }
-}
+};
 ```
 
 ---
 
-### Redux Modules > Reducer
+#### Redux Modules > Reducer
 
-## Tips for clean, efficiant reducers:
+## Tips for clean reducers:
 
 - The best reducers specialize in a single concern.
 - Complex data manipulation lives in the reducer.
-- Utilize helper functions and utils to keep your reducer clean and easy to parse.
+
+---
+
+#### Redux Modules > Reducer
+
+## More tips for clean reducers:
+
+- Use helper functions and utils.
 - Reducers can listen for actions from another module if needed.
 
 ---
 
-### Redux Modules > Reducer > Listen to other modules actions
+#### Redux Modules > Reducer > Listen to other modules actions
 
 ```javascript
 // expenseHomeModule.js
@@ -265,34 +301,29 @@ export default const myReducer = (state = initialState, action = {}) => {
 
 ---
 
-### Redux Modules
+#### Redux Modules
 # Constants
 
 - Preface the constant with the name of the reducer.
 - **Ok:** `const SUBMIT_REPORT = 'SUBMIT_REPORT'`
 - **Better:** `const SUBMIT_REPORT = '@report/SUBMIT_REPORT`
-    - Leads to simpler debugging.
-    - Reduces the likelihood of constants from other modules conflicting.
-    - Ensure a consistent naming strategy to group constants together as a family.
-
 
 ---
 
 # Components
 
----
-
-### Components > Props
-
-## Important Note:
-
-- Each prop passed increases time to render.
-
-![](time-to-render.png)
+![](typewriter.jpg)
 
 ---
 
-### Components > Props
+### Components
+# Props
+
+![](props.jpg)
+
+---
+
+#### Components > Props
 
 ## Passing Props
 
@@ -303,15 +334,25 @@ export default const myReducer = (state = initialState, action = {}) => {
 
 ---
 
-### Components > Props
-
-## Passing Props - Component to Component
-
-- Simplest method of passing data to a component through props is Component to Component.
+![](time-to-render.png)
 
 ---
 
-### Components > Props > Component to Component
+### Passing Props
+# Component to Component
+
+![](wires.jpg)
+
+---
+
+#### Components > Props > Component to Component
+
+- Simplest method of passing data.
+- Parent component gives child data through props.
+
+---
+
+#### Components > Props > Component to Component
 
 ```javascript
 // Home.jsx
@@ -327,7 +368,7 @@ class Home extends React.Component {
                     prop3={this.props.thing3}
                     ....
                 />
-            <//div>
+            </div>
         )
     }
 }
@@ -335,7 +376,7 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
 - **Good for:** 
     - A small number of props.
@@ -344,7 +385,7 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
 - **Not good for:**
     + A large number of props.
@@ -354,7 +395,7 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
 ```javascript
 // Home.jsx
@@ -370,7 +411,7 @@ class Home extends React.Component {
                     prop3={this.props.thing3} 
                     ....
                 />
-            <//div>
+            </div>
         )
     }
 }
@@ -378,31 +419,37 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
 ## Passing props from state
 
 - **Good when...**
-    + ...data is local to component, and child component is reusable, presentational (dumb) component. *ie. open state of a modal*
+    + data is local to component AND
+    + child component is presentational (dumb) component. *ie. open state of a modal*
+
+---
+
+#### Components > Props > Component to Component
+
+## Passing props from state
+
 - **Not good when...**
-    + ...data is better handled in the redux reducer. *ie. data is required for multiple components*
+    + data is better handled in the redux reducer. *ie. data is required for multiple components*
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
-## Passing props from props
+## Don't pass parent props to child
 
-- **Just don't do it**
-    + Creates tight coupling between components.
-    + Makes components difficult to maintain.
-    + Adds tech debt.
-    + Simple data changes will force you to refactor at least 2, possibly more, components.
-    + Instead, use connected pattern (more on that later).
++ Creates tight coupling between components.
++ Makes components difficult to maintain.
++ Simple data changes may force you to refactor at least 2, possibly more, components.
++ Instead, use connected pattern (more later).
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
 ```javascript
 class Home extends React.Component {
@@ -410,9 +457,9 @@ class Home extends React.Component {
         return (
             <div>
                 <MyComponent
-                    {...props} // :(
+                    {...this.props} // :(
                 />
-            <//div>
+            </div>
         )
     }
 }
@@ -420,56 +467,61 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
-## Passing `{...this.props}`
+## Don't Pass `{...this.props}`
 
-- **NEVER! It may look cool and easy, but...**
-    + Causes even tighter coupling involving at least 3 components!
-        + Grandparent (where data is coming from).
-        + Parent (where component is initialized)
-        + Child (where data is being utilized).
++ Causes even tighter coupling involving at least 3 components!
+    + Grandparent (where data is coming from).
+    + Parent (where component is initialized)
+    + Child (where data is being utilized).
 
-*But wait, theres more!*
-
----
-
-### Components > Props > Component to Component
-
-+ More `props` equals more time to render and spreading props passes everything we need as well as several that we don't.
-    + In forms this can get especially apparent. Slight decreases in perf add up when every keystroke is delayed even slightly
+*But wait, there's more!*
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
+
+- More `props` = more time to render.
+- Forms especially suffer from pref hit.
+- Spreading props leads to difficult to read/reason about code.
+
+---
+
+#### Components > Props > Component to Component
 
 ## Caveat
 
-+ Of course there's an exception to everything, including this. Higher Order Components often make use of `{...props}` which is fine. **Just be sure to think about when this works well and when it doesn't.**
+- Higher Order Components often make use of `{...props}`. 
+- **Just think about when this works well and when it doesn't.**
 
 ---
 
-### Components > Props > Component to Component
+#### Components > Props > Component to Component
 
 ## Summery
 
-+ Explicitly list props.
-+ Avoid passing parent props to children (ie. `prop={this.props.foo}`). Instead prefer the connected pattern.
-+ Avoid spreading props from one component to another (ie. `{...props}`).
+- Explicitly list props.
+- Avoid passing parent props to children (ie. `prop={this.props.foo}`). 
+- Prefer the connected pattern.
+- Avoid spreading props from one component to another (ie. `{...props}`).
 
 ---
 
-## Connected Component Pattern
+### Passing Props
+# Connected Component Pattern
+
+![](light.jpg)
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 - A connected component uses the `react-redux` connect function to pass props directly from state.
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 - **The Good**:
     - Greately reduces the code complexity.
@@ -480,7 +532,7 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 ```javascript
 // MyComponent.jsx
@@ -506,7 +558,7 @@ export defualt connect(mapStateToProps)(MyComponent);
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 ```javascript
 
@@ -525,7 +577,7 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 - Using this pattern, both components are independant of one another.
     - It can be dropped anywhere and will always work as intended.
@@ -534,7 +586,7 @@ class Home extends React.Component {
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 - Remember: avoid passing unnecessary props.
 
@@ -554,7 +606,7 @@ connect(state => ({
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 - Instead, explicity require each prop needed for that particular component.
 
@@ -570,7 +622,7 @@ connect(state => ({
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 
 - Benefits of explicitly declaring props include:
     + Easy to see when a component has expanded past its concern.
@@ -578,7 +630,7 @@ connect(state => ({
 
 ---
 
-### Components > Props > Connected Component
+#### Components > Props > Connected Component
 ## Summary
 
 + Prefer Connected Pattern over Component to Component pattern.
@@ -592,7 +644,7 @@ connect(state => ({
 
 ---
 
-### Components > Props > Higher Order Components
+#### Components > Props > Higher Order Components
 
 - A function that takes a component and returns a new component.
 - Good for reusing component logic.
@@ -600,7 +652,7 @@ connect(state => ({
 
 ---
 
-### Components > Props > Higher Order Components
+#### Components > Props > Higher Order Components
 
 ```javascript
 function logProps(WrappedComponent) {
@@ -619,7 +671,7 @@ function logProps(WrappedComponent) {
 
 ---
 
-### Components > Props > Higher Order Components
+#### Components > Props > Higher Order Components
 
 - Adds additional functionality, or injects data, into the component it wraps.
 - **Good for:**
@@ -638,7 +690,7 @@ function logProps(WrappedComponent) {
 
 ---
 
-### Components > Props > Handling Data
+#### Components > Props > Handling Data
 
 - Data is used to render the view:
     + Pass data through props
@@ -646,7 +698,7 @@ function logProps(WrappedComponent) {
 
 ---
 
-### Components > Props > Handling Data
+#### Components > Props > Handling Data
 
 - Data is used to render the view but may change based on state:
     + Pass data through mapStateToProps
@@ -654,7 +706,7 @@ function logProps(WrappedComponent) {
 
 ---
 
-### Components > Props > Handling Data
+#### Components > Props > Handling Data
 
 ```javascript
 
@@ -668,7 +720,7 @@ const mapStateToProps = state => {
 
 ---
 
-### Components > Props > Handling Data
+#### Components > Props > Handling Data
 
 - Data is used to update state based on user action
     + Dispatch action from component
@@ -676,7 +728,7 @@ const mapStateToProps = state => {
 
 ---
 
-### Components > Props
+#### Components > Props
 
 ## Props Summery
 
@@ -692,13 +744,13 @@ const mapStateToProps = state => {
 
 ---
 
-### Components > Class Components
+#### Components > Class Components
 
 - The basic building block of every React app
 
 ---
 
-### Components > Class Components
+#### Components > Class Components
 
 - **The good:**
     + Very powerful.
@@ -714,14 +766,14 @@ const mapStateToProps = state => {
 
 ---
 
-### Components > Stateless Functional Components
+#### Components > Stateless Functional Components
 
 - SFCs are the simplest way to declare components.
 - They are basic JavaScript functions that take props and return jsx.
 
 ---
 
-### Components > Stateless Functional Components
+#### Components > Stateless Functional Components
 
 ```javascript
 function Welcome(props) {
@@ -731,7 +783,7 @@ function Welcome(props) {
 
 ---
 
-### Components > Stateless Functional Components
+#### Components > Stateless Functional Components
 
 - **The good:**
     + Simpler than `class` components and easier to maintain.
@@ -740,7 +792,7 @@ function Welcome(props) {
 
 ---
 
-### Components > Stateless Functional Components
+#### Components > Stateless Functional Components
 
 - **The bad**
     + SFCs do not have access to state or any React lifecycle methods.
@@ -748,7 +800,7 @@ function Welcome(props) {
 
 ---
 
-### Components > Stateless Functional Components
+#### Components > Stateless Functional Components
 
 - SFCs **>** `class` components.
 - `class` components are best used as the root component of a view, or for components that rely on lifecycle methods. *In all other cases, use SFCs.*
@@ -759,7 +811,7 @@ function Welcome(props) {
 
 ---
 
-### Components > Refs
+#### Components > Refs
 
 - There are two primary ways for a parent component to reach into a child component
     -  surfacing values or methods (such as event hanlders) through props.
@@ -768,7 +820,7 @@ function Welcome(props) {
 
 ---
 
-### Components > Refs
+#### Components > Refs
 
 ```javascript
 // with refs
@@ -784,7 +836,7 @@ render() {
 
 ---
 
-### Components > Refs
+#### Components > Refs
 
 - **The good:**
     + Occasionally helpful. Occasionally.
@@ -800,7 +852,7 @@ render() {
 
 ---
 
-### Components > State
+#### Components > State
 
 - There are several ways to handle the state of a particular component. Let's look at some of the methods and compare.
 - `class` components have access to `this.state` whereas SFCs do not.
@@ -808,7 +860,7 @@ render() {
 
 ---
 
-### Components > State
+#### Components > State
 
 ```javascript
 class MyComponent extends React.Component {
@@ -827,7 +879,7 @@ class MyComponent extends React.Component {
 
 ---
 
-### Components > State
+#### Components > State
 
 - **The good:**
     + Very easy.
@@ -835,7 +887,7 @@ class MyComponent extends React.Component {
 
 ---
 
-### Components > State
+#### Components > State
 
 - **The bad:**
     + Relying on component state too much can make components difficult to re-use and maintain.
@@ -844,7 +896,7 @@ class MyComponent extends React.Component {
 
 ---
 
-### Components > State
+#### Components > State
 
 ## General State tips
 
@@ -854,7 +906,7 @@ class MyComponent extends React.Component {
 
 ---
 
-### Components > State
+#### Components > State
 
 ## Summery:
 + Connected SFCs **>** `class` components utilizing state + lifecycle methods **>** `class` components only utilizing state.
@@ -862,7 +914,7 @@ class MyComponent extends React.Component {
 
 ---
 
-### Components > State
+#### Components > State
 
 + It can be argued that even this data is better handled in your Redux code.
 + If a `class` component is using state, and you're forced to use `componentWillRecieveProps`, consider refactoring.

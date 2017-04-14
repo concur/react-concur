@@ -152,6 +152,27 @@ MyComponent.propTypes = {
 
 # Promote common shapes
 
-* Shapes are just objects
-* Reuse within one component
-* Export and reuse in multiple components
+Reuse inside a single component:
+
+```JavaScript
+const MyPropTypes = {
+    airport: PropTypes.shape({
+        code: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    })
+};
+
+MyComponent.propTypes = {
+    itinerary: PropTypes.shape({
+        itineraryId: PropTypes.string.isRequired,
+        departureAirport: MyPropTypes.airport.isRequired,
+        arrivalAirport: MyPropTypes.airport.isRequired,
+    }).isRequired
+}
+```
+
+Or export and reuse in multiple components:
+
+```JavaScript
+export default MyPropTypes;
+```

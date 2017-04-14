@@ -152,13 +152,35 @@ MyComponent.propTypes = {
 
 ---
 
-# For heteregeneous props use `oneOfType`
+# For heterogeneous props use `oneOfType`
+
+```JavaScript
+MyComponent.propTypes = {
+    airports: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]).isRequired
+};
+```
+
+## For enums use `oneOf`
+
+```JavaScript
+MyComponent.propTypes = {
+    shopType: PropTypes.oneOf([
+        "BY_PRICE",
+        "BY_SCHEDULE",
+        "FLEX_FARE"
+    ]).isRequired
+};
+```
+
 
 ---
 
 # Except...
 
-When you don't own it.
+When you don't own the prop.
 
 ```JavaScript
 function MyComponent({opaque}) {

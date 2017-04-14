@@ -20,11 +20,17 @@
 ```JavaScript
 import React from 'react';
 
-// ...
+function MyComponent({href}) {
+    return (
+        <a href={href}>History Eraser Button</a>
+    );
+}
 
 MyComponent.propTypes = {
     href: React.PropTypes.string
 };
+
+export default MyComponent;
 ```
 
 ---
@@ -34,16 +40,24 @@ MyComponent.propTypes = {
 ## Now an external dependency
 <https://www.npmjs.com/package/prop-types>
 
-`npm install prop-types`
+```
+npm install prop-types
+```
 
 ```JavaScript
 import PropTypes from 'prop-types';
 
-// ...
+function MyComponent({href}) {
+    return (
+        <a href={href}>History Eraser Button</a>
+    );
+}
 
 MyComponent.propTypes = {
     href: PropTypes.string
 };
+
+export default MyComponent;
 ```
 
 ---

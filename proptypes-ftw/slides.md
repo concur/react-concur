@@ -2,6 +2,11 @@
 
 ## Ben "Qube" Quarmby
 
+???
+
+- My background
+- Nick name
+
 ---
 
 # The "what" and "why"
@@ -10,6 +15,14 @@
 * Contract with consumers
 * Self documentation
 * Validation
+
+???
+
+- Pause on validation
+- Core of prop types
+- Turned off in production
+- Actually just functions
+- Come back to look at signature later
 
 ---
 
@@ -75,6 +88,11 @@ Where possible, take inspiration from the DOM.
 * But\
   `camelCase` not `kebab-case`
 
+???
+
+- Terse and scoped to use
+- Intersection of JavaScript and HTML
+
 ---
 
 # Require your props
@@ -88,6 +106,12 @@ MyComponent.propTypes = {
 };
 ```
 
+???
+
+- Creates noise in prop types, but worth it
+- Shame it isn't other way around
+- All required all the time for rest of examples
+
 ---
 
 # Avoid `any` or `object`
@@ -97,6 +121,12 @@ MyComponent.propTypes = {
     itinerary: PropTypes.object.isRequired
 }
 ```
+
+???
+
+- What's wrong with this?
+- Tells consumers very little
+- Pushes runtime errors deeper
 
 ---
 
@@ -117,6 +147,11 @@ MyComponent.propTypes = {
     }).isRequired
 }
 ```
+
+???
+
+- Nesting possible
+- Come back to manage nesting
 
 ---
 
@@ -175,6 +210,11 @@ MyComponent.propTypes = {
 };
 ```
 
+???
+
+- Heterogenous props should give pause
+- May be neccessary but...
+- Schizophrenic API cost
 
 ---
 
@@ -225,6 +265,12 @@ Or export and reuse in multiple components:
 export default MyPropTypes;
 ```
 
+???
+
+- Just JavaScript objects and functions
+- Use React building blocks to make your own PropTypes
+- Reduces nesting
+
 ---
 
 # Build your own
@@ -251,3 +297,8 @@ awesome.isRequired = awesomeSauce.bind(null, true);
 
 export default awesome;
 ```
+
+???
+
+- Actual signature excludes `isRequired`
+- Curry to create two versions

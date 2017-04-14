@@ -302,3 +302,12 @@ export default awesome;
 
 - Actual signature excludes `isRequired`
 - Curry to create two versions
+
+---
+
+# Extra resources
+
+* GitHub: [reactjs/prop-types](https://github.com/reactjs/prop-types)
+* Facebook: [Typechecking With PropTypes](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)
+* Blog: [Why React PropTypes are important](https://wecodetheweb.com/2015/06/02/why-react-proptypes-are-important/)
+* Blog: [React PropType Best Practices](http://davidwells.io/react-prop-type-best-practices/)

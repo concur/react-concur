@@ -71,7 +71,7 @@ export default MyComponent;
 Where possible, take inspiration from the DOM.
 
 * HTML vernacular\
-  `href` not `theLink`
+  `href` rather than `theLink`
 * But\
   `camelCase` not `kebab-case`
 
@@ -94,7 +94,7 @@ MyComponent.propTypes = {
 
 ```JavaScript
 MyComponent.propTypes = {
-    itinerary: PropTypes.object
+    itinerary: PropTypes.object.isRequired
 }
 ```
 
@@ -106,9 +106,15 @@ MyComponent.propTypes = {
 MyComponent.propTypes = {
     itinerary: PropTypes.shape({
         itineraryId: PropTypes.string.isRequired,
-        departureName: PropTypes.string.isRequired,
-        arrivalTime: PropTypes.date.isRequired
-    })
+        departureAirport: PropTypes.shape({
+            code: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired
+        }).isRequired,
+        arrivalAirport: PropTypes.shape({
+            code: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired
+        }).isRequired,
+    }).isRequired
 }
 ```
 

@@ -1,3 +1,5 @@
+class: center middle
+
 # PropTypes FTW
 
 ## Ben "Qube" Quarmby
@@ -5,21 +7,25 @@
 ???
 
 - My background
-- Nick name
+- Nick name, etc.
 
 ---
 
 # The "what" and "why"
 
 * Component schema
+
 * Contract with consumers
+
 * Self documentation
+
 * Validation
 
 ???
 
 - Pause on validation
-- Core of prop types
+- Actual core function of prop types
+- Helps React apps to scale
 - Turned off in production
 - Actually just functions
 - Come back to look at signature later
@@ -75,6 +81,8 @@ export default MyComponent;
 
 ---
 
+class: center middle
+
 # Best practices
 
 ---
@@ -83,9 +91,12 @@ export default MyComponent;
 
 Where possible, take inspiration from the DOM.
 
-* HTML vernacular\
+* HTML vernacular
+
   `href` rather than `theLink`
-* But\
+
+* But
+
   `camelCase` not `kebab-case`
 
 ???
@@ -98,6 +109,7 @@ Where possible, take inspiration from the DOM.
 # Require your props
 
 * Optional by default
+
 * Use `isRequired`
 
 ```JavaScript
@@ -157,37 +169,37 @@ MyComponent.propTypes = {
 
 # What about dictionaries and lists?
 
-Use `objectOf` and `arrayOf`.
+## Use `objectOf` and `arrayOf`.
 
 ```JavaScript
 const airports = {
     "SEA": {
         cityName: "Seattle",
-        subdivisionName: "Washington",
         countryCode: "US"
     }
 }
 const flights = [{
     airportCode: "SEA",
-    number: 786
+    flightNumber: 786
 }];
 
 MyComponent.propTypes = {
     airports: PropTypes.objectOf({
         cityName: PropTypes.string.isRequired,
-        subdivisionName: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired
     }).isRequired,
     flights: PropTypes.arrayOf({
         airportCode: PropTypes.string.isRequired,
-        number: PropTypes.number.isRequired
+        flightNumber: PropTypes.number.isRequired
     }).isRequired
 }
 ```
 
 ---
 
-# For heterogeneous props use `oneOfType`
+# Heterogeneous props
+
+## Use `oneOfType`
 
 ```JavaScript
 MyComponent.propTypes = {
@@ -273,7 +285,7 @@ export default MyPropTypes;
 
 ---
 
-# Build your own
+# DIY
 
 ```JavaScript
 function awesomeSauce(isRequired, props, propName, componentName) {
@@ -308,6 +320,9 @@ export default awesome;
 # Extra resources
 
 * GitHub: [reactjs/prop-types](https://github.com/reactjs/prop-types)
+
 * Facebook: [Typechecking With PropTypes](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)
+
 * Blog: [Why React PropTypes are important](https://wecodetheweb.com/2015/06/02/why-react-proptypes-are-important/)
+
 * Blog: [React PropType Best Practices](http://davidwells.io/react-prop-type-best-practices/)

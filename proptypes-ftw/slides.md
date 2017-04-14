@@ -77,6 +77,19 @@ Where possible, take inspiration from the DOM.
 
 ---
 
+# Require your props
+
+* Optional by default
+* Use `isRequired`
+
+```JavaScript
+MyComponent.propTypes = {
+    href: PropTypes.string.isRequired
+};
+```
+
+---
+
 # Avoid `any` or `object`
 
 ```JavaScript

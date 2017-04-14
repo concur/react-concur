@@ -224,3 +224,30 @@ Or export and reuse in multiple components:
 ```JavaScript
 export default MyPropTypes;
 ```
+
+---
+
+# Build your own
+
+```JavaScript
+function awesomeSauce(isRequired, props, propName, componentName) {
+    const value = props[propName];
+
+    if (value === null || value === undefined) {
+        if (!isRequired) {
+            return;
+        }
+
+        return new Error(`Prop "${propName}" on component "${componentName}" is required.`);
+    }
+
+    if (!value.isAwesome) {
+        return new Error(`Prop "${propName}" on component "${componentName}" is not awesome.`)
+    }
+}
+
+const awesome = awesomeSauce.bind(null, false);
+awesome.isRequired = awesomeSauce.bind(null, true);
+
+export default awesome;
+```

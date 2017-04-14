@@ -120,15 +120,35 @@ MyComponent.propTypes = {
 
 ---
 
-# For dictionaries use `objectOf`
+# What about dictionaries and lists?
 
----
+Use `objectOf` and `arrayOf`.
 
-# For arrays use `arrayOf`
+```JavaScript
+const airports = {
+    "SEA": {
+        cityName: "Seattle",
+        subdivisionName: "Washington",
+        countryCode: "US"
+    }
+}
+const flights = [{
+    airportCode: "SEA",
+    number: 786
+}];
 
----
-
-# For enums use `oneOf`
+MyComponent.propTypes = {
+    airports: PropTypes.objectOf({
+        cityName: PropTypes.string.isRequired,
+        subdivisionName: PropTypes.string.isRequired,
+        countryCode: PropTypes.string.isRequired
+    }).isRequired,
+    flights: PropTypes.arrayOf({
+        airportCode: PropTypes.string.isRequired,
+        number: PropTypes.number.isRequired
+    }).isRequired
+}
+```
 
 ---
 

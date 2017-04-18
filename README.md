@@ -9,9 +9,9 @@
 | Break |  |  |
 | Clean, Maintainable React | Cody Barrus | 10:45 |
 | NUI-\* | Ryan Ewing | 11:30 |
-| 🍔 🍔 🍔 | | 12p-1p |
+| 🍔 🍔 🍔 | | 12pm |
 | Prop Types best practices | Ben Quarmby | 1:00 |
 | React/Redux in Legacy CTE | Megan Conley | 1:30 |
 | Accessibility in React | Jeffrey Johnson | 2:00 |
-| Pluralization practices | Ed Gervais - 2:30 |
+| Pluralization practices | Ed Gervais | 2:30 |
 | Open Forum | All | 2:45 |

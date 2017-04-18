@@ -1,7 +1,6 @@
 # react-concur
 ## Agenda
 
-### Before Lunch 9a-12p
 | Session | Speaker | Time |
 | ------- | ------- | ---- |
 | React 101 | Cody Barrus | 9:15 |

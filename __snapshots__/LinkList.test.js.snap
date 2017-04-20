@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Links when passed an array of hrefs 1`] = `
+<div>
+  <Link
+    page="yahoo"
+  />
+  <Link
+    page="google"
+  />
+</div>
+`;

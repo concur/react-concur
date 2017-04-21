@@ -1,27 +1,5 @@
 ------
 
-LEGACY 
-
-...
-
-/*** 10 lines of code ***/
-
-switch (Stops) {
-    case 0:
-        stopText = OTGetUserMessage("TravelAvailabilityJS", "Nonstop");
-        break;
-    case 1:
-        stopText = OTGetUserMessage("TravelAvailabilityJS", "OneStop");
-        break;
-    default:
-        stopText = OTFormatUserMessage("TravelAvailabilityJS", "XStops", Stops);
-        break;
-}
-
-...
-
-------
-
 NUI
 
 ...

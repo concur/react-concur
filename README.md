@@ -3,14 +3,15 @@
 
 | Session | Speaker | Time |
 | ------- | ------- | ---- |
-| React 101 | Cody Barrus | 9:15 |
-| Unit testing in React | Ryan Ewing | 9:45 |
+| Introduction | Ameer Mubarack | 9:00 |
+| React 101 | Cody Barrus | 9:30 |
+| Unit testing in React | Ryan Ewing | 10:00 |
 | Break |  |  |
-| Clean, Maintainable React | Cody Barrus | 10:45 |
-| NUI-\* | Ryan Ewing | 11:30 |
-| 🍔 🍔 🍔 | | 12pm |
-| Prop Types best practices | Ben Quarmby | 1:00 |
-| React/Redux in Legacy CTE | Megan Conley | 1:30 |
-| Accessibility in React | Jeffrey Johnson | 2:00 |
-| Pluralization practices | Ed Gervais | 2:30 |
-| Open Forum | All | 2:45 |
+| Clean, Maintainable React | Cody Barrus | 11:00 |
+| NUI-\* | Ryan Ewing | 11:45 |
+| 🍔 🍔 🍔 | | 12:15pm |
+| Prop Types best practices | Ben Quarmby | 1:15 |
+| React/Redux in Legacy CTE | Megan Conley | 1:45 |
+| Accessibility in React | Jeffrey Johnson | 2:15 |
+| Pluralization practices | Ed Gervais | 2:45 |
+| Open Forum | All | 3:00 |
